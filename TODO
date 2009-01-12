@@ -1,0 +1,12 @@
+= Interface =
+* add setting windows to set fonts and pictures (bike sprite and background)
+* implement close window handlers
+* cumulated instantaneous speed for teams
+* background color on each teams pane as well as on the panes of the affected bikes
+* bigger sprites for bikes
+* make bike/background size ajustable wrt the screen size and number of teams
+* fix the bike numbering and reordering
+* add team on the fly
+* change bike parameters on the fly
+* change team parameters on the fly
+* Record bikers and compute speed records 
