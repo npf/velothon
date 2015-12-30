@@ -50,3 +50,32 @@ bikers and sponsors, starting counters, and so on.
 For now, the prototype is composed of a capter device for 10 bikes
 (10 capters) controled by an C-like program running on a Arduino. 
 The software interface is written in Ruby/Gtk.
+
+FONTS
+=====
+
+The display of the GUI uses the LCD fonts, which is Copyright 1999 Samuel
+Reynolds, all rights reserved.  It can be downloaded from Internet as the
+lcd_lcd_mono.zip file and unziped in the root of the repository.
+
+The content of that zip file is:
+LCDMonoWinTT/README.TXT
+LCDMonoWinTT/LCDM2L__.TTF
+LCDMonoWinTT/LCDM2N__.TTF
+LCDMonoWinTT/LCDMB___.TTF
+LCDMonoWinTT/LCDM2U__.TTF
+LCDMonoWinTT/LCDM2B__.TTF
+LCDMonoWinTT/LCDMN___.TTF
+LCDMonoWinTT/LICENSE.TXT
+LCDMonoWinTT/LCDML___.TTF
+LCDMonoWinTT/LCDMU___.TTF
+LCDWinTT/README.TXT
+LCDWinTT/LCD-N___.TTF
+LCDWinTT/LCD2L___.TTF
+LCDWinTT/LCD2U___.TTF
+LCDWinTT/LCD2N___.TTF
+LCDWinTT/LCD-L___.TTF
+LCDWinTT/LCD2B___.TTF
+LCDWinTT/LICENSE.TXT
+LCDWinTT/LCD-U___.TTF
+LCDWinTT/LCD-BOLD.TTF

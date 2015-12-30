@@ -29,7 +29,7 @@ LCD_FONT = 'Sans'
 class Tick
 	attr_reader :index, :value, :time
 	#@@TTY = "/tmp/ttyUSB0"
-	@@TTY = "/dev/ttyUSB0"
+	@@TTY = "/dev/ttyS0"
 	def initialize(index, value, time)
 		@index = index
 		@value = value
@@ -440,9 +440,9 @@ class BikeMonitor < Gtk::TreeView
 		append_column(Gtk::TreeViewColumn.new("#", Gtk::CellRendererText.new, :text => 0))
 		append_column(Gtk::TreeViewColumn.new("Description", Gtk::CellRendererText.new, :text => 1))
 		append_column(Gtk::TreeViewColumn.new("Roue", Gtk::CellRendererText.new, :text => 2))
-		append_column(Gtk::TreeViewColumn.new("Moyenne vélo", Gtk::CellRendererText.new, :text => 9))
-		append_column(Gtk::TreeViewColumn.new("Pointe vélo", Gtk::CellRendererText.new, :text => 10))
-		append_column(Gtk::TreeViewColumn.new("Distance vélo", Gtk::CellRendererText.new, :text => 8))
+		append_column(Gtk::TreeViewColumn.new("Moyenne velo", Gtk::CellRendererText.new, :text => 9))
+		append_column(Gtk::TreeViewColumn.new("Pointe velo", Gtk::CellRendererText.new, :text => 10))
+		append_column(Gtk::TreeViewColumn.new("Distance velo", Gtk::CellRendererText.new, :text => 8))
 		append_column(Gtk::TreeViewColumn.new("Vitesse", Gtk::CellRendererText.new, :text => 5))
 		append_column(Gtk::TreeViewColumn.new("Temps", Gtk::CellRendererText.new, :text => 3))
 		append_column(Gtk::TreeViewColumn.new("Distance", Gtk::CellRendererText.new, :text => 4))
@@ -460,8 +460,8 @@ class TeamMonitor < Gtk::TreeView
 		append_column(Gtk::TreeViewColumn.new("Temps", Gtk::CellRendererText.new, :text => 2))
 		append_column(Gtk::TreeViewColumn.new("Distance", Gtk::CellRendererText.new, :text => 3))
 		append_column(Gtk::TreeViewColumn.new("Dons Total", Gtk::CellRendererText.new, :text => 7))
-		append_column(Gtk::TreeViewColumn.new("Crédits", Gtk::CellRendererText.new, :text => 8))
-		append_column(Gtk::TreeViewColumn.new("Vélos", Gtk::CellRendererText.new, :text => 9))
+		append_column(Gtk::TreeViewColumn.new("Credits", Gtk::CellRendererText.new, :text => 8))
+		append_column(Gtk::TreeViewColumn.new("Velos", Gtk::CellRendererText.new, :text => 9))
 		append_column(Gtk::TreeViewColumn.new("p", Gtk::CellRendererText.new, :text => 10))
 		append_column(Gtk::TreeViewColumn.new("l", Gtk::CellRendererText.new, :text => 11))
 		append_column(Gtk::TreeViewColumn.new("dg", Gtk::CellRendererText.new, :text => 12))
@@ -538,14 +538,14 @@ class BikeControl < Gtk::VBox
 		pack_start(team_hbox, true)
 
 		duration_hbox = Gtk::HBox.new
-		@duration_label = Gtk::Label.new("Durée (min):")
+		@duration_label = Gtk::Label.new("Duree (min):")
 		@duration_select = Gtk::SpinButton.new(2,30,2)
 		duration_hbox.pack_start(@duration_label)		
 		duration_hbox.pack_end(@duration_select)		
 		pack_start(duration_hbox, false)
 	
-		@start_button = Gtk::Button.new("Démarrer")
-		@stop_button = Gtk::Button.new("Arrèter")
+		@start_button = Gtk::Button.new("Demarrer")
+		@stop_button = Gtk::Button.new("Arreter")
 		pack_end(@stop_button, false)
 		pack_end(@start_button, false)
 		
@@ -553,7 +553,7 @@ class BikeControl < Gtk::VBox
 		@start_button.signal_connect('clicked') do
 			iter = @team_select.selection.selected
 			if iter.nil?
-				dialog("Il faut séléctionner une équipe")
+				dialog("Il faut selectionner une equipe")
 			else
 				team = iter[0]
 				if bike.start(team, @duration_select.value * 60)
@@ -570,6 +570,7 @@ class BikeControl < Gtk::VBox
 		show_all
 		bike.add_observer(self)
 	end
+
 	def update(bike)
 		if bike.kind_of? Bike
 			if bike.running 
@@ -607,7 +608,7 @@ class SponsorControl < Gtk::VBox
 		pack_start(Gtk::HSeparator.new, false)
 
 		rate_hbox = Gtk::HBox.new
-		rate_label = Gtk::Label.new("Rapport (min/€):")
+		rate_label = Gtk::Label.new("Rapport (min/euros):")
 		rate_select = Gtk::SpinButton.new(1,10,1)
 		rate_select.value=2
 		rate_button = Gtk::Button.new("Ok")
@@ -630,7 +631,7 @@ class SponsorControl < Gtk::VBox
 		pack_start(team_hbox, true)
 
 		amount_hbox = Gtk::HBox.new
-		amount_label = Gtk::Label.new("Somme (€):")
+		amount_label = Gtk::Label.new("Somme (euros):")
 		amount_select = Gtk::SpinButton.new(1,100,1)
 		amount_hbox.pack_start(amount_label)
 		amount_hbox.pack_end(amount_select)
@@ -720,7 +721,7 @@ class BikeStats < Gtk::VBox
 	def initialize(bike)
 		super()
 		@label_name = Gtk::Label.new
-		frame_name = Gtk::Frame.new("Vélo")
+		frame_name = Gtk::Frame.new("Velo")
 		frame_name.add(@label_name)
 		pack_start(frame_name)
 		@label_team = Gtk::Label.new
@@ -737,7 +738,7 @@ class BikeStats < Gtk::VBox
 		frame_dist.add(@label_dist)
 		pack_start(frame_dist)
 		@label_speed = Gtk::Label.new
-		frame_speed = Gtk::Frame.new("Vitesse\ninstantanée")
+		frame_speed = Gtk::Frame.new("Vitesse\ninstantanee")
 		frame_speed.add(@label_speed)
 		pack_start(frame_speed)
 		@label_avgspeed = Gtk::Label.new
@@ -772,17 +773,17 @@ end
 
 class TeamRoad < Gtk::HBox
 	@@pixbuf_bike = [
-		Gdk::Pixbuf.new("bike0.png"),
-		Gdk::Pixbuf.new("bike1.png"),
-		Gdk::Pixbuf.new("bike2.png"),
-		Gdk::Pixbuf.new("bike3.png"),
-		Gdk::Pixbuf.new("bike4.png"),
-		Gdk::Pixbuf.new("bike5.png"),
-		Gdk::Pixbuf.new("bike5.png"),
-		Gdk::Pixbuf.new("bike5.png"),
-		Gdk::Pixbuf.new("bike5.png"),
-		Gdk::Pixbuf.new("bike5.png"),
-		Gdk::Pixbuf.new("bike5.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
+		Gdk::Pixbuf.new("bike.png"),
 	]
 	@@pixbuf_background = Gdk::Pixbuf.new("background.png")
 	def initialize()
@@ -809,7 +810,7 @@ class TeamRoad < Gtk::HBox
 		@label_name = Gtk::Label.new
 		@label_name.xalign = 0
 		frame_name.add(@label_name)
-		frame_credit = Gtk::Frame.new("Crédits/Dons")
+		frame_credit = Gtk::Frame.new("Credits/Dons")
 		pack_end(frame_credit)
 		@label_credit = Gtk::Label.new
 		frame_credit.add(@label_credit)
@@ -864,9 +865,9 @@ class TeamRoad < Gtk::HBox
 
 			@label_dist.markup="<span font_desc='#{LCD_FONT} 24'>#{format("%.1f",team.dist/1000)}</span><span font_desc='Sans 10'> Km</span>"
 			if team.credit == 0
-				@label_credit.markup="<span font_desc='#{LCD_FONT} 24' foreground='red'>#{team.credit.round}</span><span font_desc='#{LCD_FONT} 14'>/#{team.ol_credit.round}</span><span font_desc='Sans 10'> €</span>"
+				@label_credit.markup="<span font_desc='#{LCD_FONT} 24' foreground='red'>#{team.credit.round}</span><span font_desc='#{LCD_FONT} 14'>/#{team.ol_credit.round}</span><span font_desc='Sans 10'> euros</span>"
 			else
-				@label_credit.markup="<span font_desc='#{LCD_FONT} 24'>#{team.credit.round}</span><span font_desc='#{LCD_FONT} 14'>/#{team.ol_credit.round}</span><span font_desc='Sans 10'> €</span>"
+				@label_credit.markup="<span font_desc='#{LCD_FONT} 24'>#{team.credit.round}</span><span font_desc='#{LCD_FONT} 14'>/#{team.ol_credit.round}</span><span font_desc='Sans 10'> euros</span>"
 			end
 			#@label_name.markup="<span font_desc='Comic Sans MS Bold 24'>#{team.name} </span>"
 			@label_name.markup="<span font_desc='Sans 20'>#{team.name} </span>"
@@ -897,16 +898,16 @@ Team.reg_observer(dumper)
 Team.reg_observer(teamdatastore)
 
 Bike.create([
-	{:no => 0, :desc => "Vélo 1", :wheel => 2.10,},
-	{:no => 1, :desc => "Vélo 2", :wheel => 2.10 },
-	{:no => 2, :desc => "Vélo 3", :wheel => 2.10 },
-	{:no => 3, :desc => "Vélo 4", :wheel => 2.10 },
-	{:no => 4, :desc => "Vélo 5", :wheel => 2.10 },
-	{:no => 5, :desc => "Vélo 6", :wheel => 2.10 },
-	{:no => 6, :desc => "Vélo 7", :wheel => 2.10 },
-	{:no => 7, :desc => "Vélo 8", :wheel => 2.10 },
-	{:no => 8, :desc => "Vélo 9", :wheel => 2.10 },
-	{:no => 9, :desc => "Vélo 10", :wheel => 2.10 },
+	{:no => 0, :desc => "Velo 1", :wheel => 2.10,},
+	{:no => 1, :desc => "Velo 2", :wheel => 2.10 },
+	{:no => 2, :desc => "Velo 3", :wheel => 2.10 },
+	{:no => 3, :desc => "Velo 4", :wheel => 2.10 },
+	{:no => 4, :desc => "Velo 5", :wheel => 2.10 },
+	{:no => 5, :desc => "Velo 6", :wheel => 2.10 },
+	{:no => 6, :desc => "Velo 7", :wheel => 2.10 },
+	{:no => 7, :desc => "Velo 8", :wheel => 2.10 },
+	{:no => 8, :desc => "Velo 9", :wheel => 2.10 },
+	{:no => 9, :desc => "Velo 10", :wheel => 2.10 },
 	])
 
 #Bike.create([
@@ -937,7 +938,7 @@ Team.reg_observer(displaywindow)
 Team.create("Arcisse\n")
 Team.create("Chamont\n")
 Team.create("La Biousse\n")
-Team.create("Bourg Les Môles\nChamp-Bénard")
+Team.create("Bourg Les Moles\nChamp-Benard")
 Team.create("Le Rondeau\nVersin")
 Team.create("Rivier Laval\nBonne-Gagne")
 Team.create("Trieu\nCrucilleux")
